@@ -39,6 +39,7 @@
 // class _MyHomePageState extends State<MyHomePage> {
 //   @override
 //   Widget build(BuildContext context) {
+  
 //     ////Consumer helps to pass data from the change notifier class in order to trigger an update
 //     return Consumer<CounterModel>(builder: (context, data, _) {
 //       return Scaffold(
@@ -223,7 +224,7 @@
 //
 //
 //
-//3rd Usage using Provider.of
+//3rd Usage using Provider.of to listen to changes
 import 'package:flutter/material.dart';
 import 'package:provider_flutter/state_management/counter_model.dart';
 import 'package:provider/provider.dart';
@@ -235,13 +236,12 @@ void main() {
   runApp(const MyApp());
 }
 
-//Consumer helps to pass data from the change notifier class in order to trigger an update
-
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+     //ChangeNotifierProvider helps to create instances of the ChangeNotifier class
     return ChangeNotifierProvider(
       create: ((context) => CounterModel()),
       child: MaterialApp(
