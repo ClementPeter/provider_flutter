@@ -106,7 +106,7 @@
 //
 //
 //
-//2nd Usage using MultiProvider and Consumer to incrase, decrease counter and toggle light/dark mode
+//2nd Usage using MultiProvider and Consumer to increase, decrease counter and toggle light/dark mode
 import 'package:flutter/material.dart';
 import 'package:provider_flutter/state_management/counter_model.dart';
 import 'package:provider/provider.dart';
@@ -129,18 +129,17 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => MyThemeProvider())
       ],
       child: Consumer<MyThemeProvider>(
-        //stream: null,
-        builder: (context, themeData,child) {
-          return MaterialApp(
-            title: 'Provider_Flutter',
-            theme: themeData.currentTheme(),
-            home: const MyHomePage(title: 'Provider_Flutter'),
-          );
-        }
-      ),
+                  builder: (context, themeData, child) {
+        return MaterialApp(
+          title: 'Provider_Flutter',
+          theme: themeData.currentTheme(),
+          home: const MyHomePage(title: 'Provider_Flutter'),
+        );
+      }),
     );
   }
 }
+
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -187,18 +186,15 @@ class _MyHomePageState extends State<MyHomePage> {
               tooltip: 'Increment',
               child: const Icon(Icons.add),
             ),
-            Consumer<MyThemeProvider>(
-          
-              builder: (context, themeData, child) {
-                return FloatingActionButton(
-                  onPressed: () {
-                    themeData.switchTheme();
-                  },
-                  tooltip: 'theme mode',
-                  child: const Icon(Icons.leaderboard),
-                );
-              }
-            ),
+            Consumer<MyThemeProvider>(builder: (context, themeData, child) {
+              return FloatingActionButton(
+                onPressed: () {
+                  themeData.switchTheme();
+                },
+                tooltip: 'theme mode',
+                child: themeData.isDark ? const Icon(Icons.dark_mode): const Icon(Icons.light_mode),
+              );
+            }),
             FloatingActionButton(
               onPressed: () {
                 data.decrementCounter();
