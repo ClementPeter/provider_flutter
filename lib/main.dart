@@ -3,7 +3,7 @@
 // import 'package:provider/provider.dart';
 
 // //First Provider Usage -- ChangeNotifierProvider
-// ChangeNotifierProvider helps to create instances of the ChangeNotifier class
+// //ChangeNotifierProvider helps to create instances of the ChangeNotifier class
 
 // void main() {
 //   runApp(const MyApp());
@@ -41,7 +41,7 @@
 //   @override
 //   Widget build(BuildContext context) {
 //     //Consumer helps to pass data from the change notifier class
-//      // in order to trigger an update to the widget we want to update
+//     // in order to trigger an update to the widget we want to update
 //     return Consumer<CounterModel>(builder: (context, data, _) {
 //       return Scaffold(
 //         appBar: AppBar(
@@ -106,19 +106,27 @@
 //
 //
 //
-//2nd Usage using MultiProvider and Consumer to increase, decrease counter and toggle light/dark mode
+//2nd Usage using MultiProvider and Consumer to increase, decrease counter and
+// toggle light/dark mode
 import 'package:flutter/material.dart';
 import 'package:provider_flutter/state_management/counter_model.dart';
 import 'package:provider/provider.dart';
-import 'package:provider_flutter/theme.dart';
+//import 'package:provider_flutter/theme.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+bool isDark = true;
+
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -126,20 +134,73 @@ class MyApp extends StatelessWidget {
       providers: [
         //ChangeNotifierProvider helps to create instances of the ChangeNotifier class
         ChangeNotifierProvider(create: (context) => CounterModel()),
-        ChangeNotifierProvider(create: (context) => MyThemeProvider())
       ],
-      child: Consumer<MyThemeProvider>(
-                  builder: (context, themeData, child) {
-        return MaterialApp(
-          title: 'Provider_Flutter',
-          theme: themeData.currentTheme(),
-          home: const MyHomePage(title: 'Provider_Flutter'),
-        );
-      }),
+      child: MaterialApp(
+        title: 'Provider_Flutter',
+        // theme: themeData.currentTheme(),
+        //themeMode: themeData.currentTheme(),
+        // themeMode: ThemeMode.dark,
+        theme: isDark
+            ? ThemeData.dark(useMaterial3: true)
+            : ThemeData.light(useMaterial3: true),
+        //home: const MyHomePage(title: 'Provider_Flutter'),
+        home: Consumer<CounterModel>(builder: (context, data, child) {
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text("Provider_Flutter"),
+              centerTitle: true,
+            ),
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  const Text(
+                    'You have pushed the button this many times:',
+                  ),
+                  Text(
+                    '${data.getCounter}',
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
+                ],
+              ),
+            ),
+            floatingActionButton: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                FloatingActionButton(
+                  onPressed: () {
+                    data.incrementCounter();
+                  },
+                  tooltip: 'Increment',
+                  child: const Icon(Icons.add),
+                ),
+                FloatingActionButton(
+                  onPressed: () {
+                    setState(() {
+                      isDark = !isDark;
+                    });
+                  },
+                  tooltip: 'theme mode',
+                  child: isDark
+                      ? const Icon(Icons.dark_mode)
+                      : const Icon(Icons.light_mode),
+                ),
+                FloatingActionButton(
+                  onPressed: () {
+                    data.decrementCounter();
+                  },
+                  tooltip: 'Decrement',
+                  child: const Icon(Icons.remove),
+                ),
+              ],
+            ),
+          );
+        }),
+      ),
     );
   }
 }
-
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -170,7 +231,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               Text(
                 '${data.getCounter}',
-                style: Theme.of(context).textTheme.headline4,
+                style: Theme.of(context).textTheme.headlineMedium,
               ),
             ],
           ),
@@ -186,15 +247,18 @@ class _MyHomePageState extends State<MyHomePage> {
               tooltip: 'Increment',
               child: const Icon(Icons.add),
             ),
-            Consumer<MyThemeProvider>(builder: (context, themeData, child) {
-              return FloatingActionButton(
-                onPressed: () {
-                  themeData.switchTheme();
-                },
-                tooltip: 'theme mode',
-                child: themeData.isDark ? const Icon(Icons.dark_mode): const Icon(Icons.light_mode),
-              );
-            }),
+            FloatingActionButton(
+              onPressed: () {
+                setState(() {
+                  isDark = false;
+                  //themeData.switchTheme();
+                });
+              },
+              tooltip: 'theme mode',
+              child: isDark
+                  ? const Icon(Icons.dark_mode)
+                  : const Icon(Icons.light_mode),
+            ),
             FloatingActionButton(
               onPressed: () {
                 data.decrementCounter();
