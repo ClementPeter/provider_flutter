@@ -137,9 +137,7 @@ class _MyAppState extends State<MyApp> {
       ],
       child: MaterialApp(
         title: 'Provider_Flutter',
-        // theme: themeData.currentTheme(),
-        //themeMode: themeData.currentTheme(),
-        // themeMode: ThemeMode.dark,
+
         theme: isDark
             ? ThemeData.dark(useMaterial3: true)
             : ThemeData.light(useMaterial3: true),
