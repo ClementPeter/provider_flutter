@@ -106,12 +106,10 @@
 //
 //
 //
-//2nd Usage using MultiProvider and Consumer to increase, decrease counter and
-// toggle light/dark mode
+//2nd Usage using MultiProvider and Consumer to increase, decrease counter and toggle light/dark mode
 import 'package:flutter/material.dart';
 import 'package:provider_flutter/state_management/counter_model.dart';
 import 'package:provider/provider.dart';
-//import 'package:provider_flutter/theme.dart';
 
 void main() {
   runApp(const MyApp());
@@ -199,76 +197,6 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
-// class MyHomePage extends StatefulWidget {
-//   const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-//   final String title;
-
-//   @override
-//   State<MyHomePage> createState() => _MyHomePageState();
-// }
-
-// class _MyHomePageState extends State<MyHomePage> {
-//   @override
-//   Widget build(BuildContext context) {
-//     //Consumer helps to pass data from the change notifier class
-//     // in order to trigger an update to the widget we want to update
-//     return Consumer<CounterModel>(builder: (context, data, child) {
-//       return Scaffold(
-//         appBar: AppBar(
-//           title: Text(widget.title),
-//           centerTitle: true,
-//         ),
-//         body: Center(
-//           child: Column(
-//             mainAxisAlignment: MainAxisAlignment.center,
-//             children: <Widget>[
-//               const Text(
-//                 'You have pushed the button this many times:',
-//               ),
-//               Text(
-//                 '${data.getCounter}',
-//                 style: Theme.of(context).textTheme.headlineMedium,
-//               ),
-//             ],
-//           ),
-//         ),
-//         floatingActionButton: Row(
-//           crossAxisAlignment: CrossAxisAlignment.end,
-//           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//           children: [
-//             FloatingActionButton(
-//               onPressed: () {
-//                 data.incrementCounter();
-//               },
-//               tooltip: 'Increment',
-//               child: const Icon(Icons.add),
-//             ),
-//             FloatingActionButton(
-//               onPressed: () {
-//                 setState(() {
-//                   isDark = false;
-//                   //themeData.switchTheme();
-//                 });
-//               },
-//               tooltip: 'theme mode',
-//               child: isDark
-//                   ? const Icon(Icons.dark_mode)
-//                   : const Icon(Icons.light_mode),
-//             ),
-//             FloatingActionButton(
-//               onPressed: () {
-//                 data.decrementCounter();
-//               },
-//               tooltip: 'Decrement',
-//               child: const Icon(Icons.remove),
-//             ),
-//           ],
-//         ),
-//       );
-//     });
-//   }
-// }
 
 //
 //
