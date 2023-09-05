@@ -52,18 +52,15 @@
 //           child: Column(
 //             mainAxisAlignment: MainAxisAlignment.center,
 //             children: <Widget>[
-//               const Text(
-//                 'You have pushed the button this many times:',
-//               ),
+//               const Text('You have pushed the button this many times:'),
 //               Text(
 //                 '${data.getCounter}',
-//                 style: Theme.of(context).textTheme.headline4,
+//                 style: Theme.of(context).textTheme.headlineMedium,
 //               ),
 //             ],
 //           ),
 //         ),
 //         floatingActionButton: Row(
-//           crossAxisAlignment: CrossAxisAlignment.end,
 //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 //           children: [
 //             FloatingActionButton(
@@ -115,7 +112,7 @@ void main() {
   runApp(const MyApp());
 }
 
-bool isDark = true;
+bool isDark = true; //hold dark mode value
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -139,65 +136,67 @@ class _MyAppState extends State<MyApp> {
             ? ThemeData.dark(useMaterial3: true)
             : ThemeData.light(useMaterial3: true),
         //home: const MyHomePage(title: 'Provider_Flutter'),
-        home: Consumer<CounterModel>(builder: (context, data, child) {
-          return Scaffold(
-            appBar: AppBar(
-              title: const Text("Provider_Flutter"),
-              centerTitle: true,
-            ),
-            body: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  const Text(
-                    'You have pushed the button this many times:',
+        //specify the provider type inside < >
+        home: Consumer<CounterModel>(
+          builder: (context, data, child) {
+            return Scaffold(
+              appBar: AppBar(
+                title: const Text("Provider_Flutter"),
+                centerTitle: true,
+              ),
+              body: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    const Text(
+                      'You have pushed the button this many times:',
+                    ),
+                    Text(
+                      '${data.getCounter}',
+                      style: Theme.of(context).textTheme.headlineMedium,
+                    ),
+                  ],
+                ),
+              ),
+              floatingActionButton: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  FloatingActionButton(
+                    onPressed: () {
+                      data.incrementCounter();
+                    },
+                    tooltip: 'Increment',
+                    child: const Icon(Icons.add),
                   ),
-                  Text(
-                    '${data.getCounter}',
-                    style: Theme.of(context).textTheme.headlineMedium,
+                  FloatingActionButton(
+                    onPressed: () {
+                      setState(() {
+                        isDark = !isDark;
+                      });
+                    },
+                    tooltip: 'theme mode',
+                    child: isDark
+                        ? const Icon(Icons.dark_mode)
+                        : const Icon(Icons.light_mode),
+                  ),
+                  FloatingActionButton(
+                    onPressed: () {
+                      data.decrementCounter();
+                    },
+                    tooltip: 'Decrement',
+                    child: const Icon(Icons.remove),
                   ),
                 ],
               ),
-            ),
-            floatingActionButton: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                FloatingActionButton(
-                  onPressed: () {
-                    data.incrementCounter();
-                  },
-                  tooltip: 'Increment',
-                  child: const Icon(Icons.add),
-                ),
-                FloatingActionButton(
-                  onPressed: () {
-                    setState(() {
-                      isDark = !isDark;
-                    });
-                  },
-                  tooltip: 'theme mode',
-                  child: isDark
-                      ? const Icon(Icons.dark_mode)
-                      : const Icon(Icons.light_mode),
-                ),
-                FloatingActionButton(
-                  onPressed: () {
-                    data.decrementCounter();
-                  },
-                  tooltip: 'Decrement',
-                  child: const Icon(Icons.remove),
-                ),
-              ],
-            ),
-          );
-        }),
+            );
+          },
+        ),
       ),
     );
   }
 }
 
-
 //
 //
 //
@@ -224,7 +223,7 @@ class _MyAppState extends State<MyApp> {
 //
 //
 //
-// ////3rd Usage using Provider.of to listen to changes from ChangeNotifier class
+// ////3rd Usage using Provider.of to listen to changes from Counter Model ChangeNotifier class
 // import 'package:flutter/material.dart';
 // import 'package:provider_flutter/state_management/counter_model.dart';
 // import 'package:provider/provider.dart';
@@ -266,6 +265,7 @@ class _MyAppState extends State<MyApp> {
 //   Widget build(BuildContext context) {
 //     //Provider .of helps to listen to changes from the provider class and pass the data too
 //     final data = Provider.of<CounterModel>(context);
+    
 //     //Provider.of listen : false disable the provider form listening to the change notifier class - (CounterModel)
 //     // final data = Provider.of<CounterModel>(context, listen: false);
 
@@ -282,7 +282,7 @@ class _MyAppState extends State<MyApp> {
 //             ),
 //             Text(
 //               '${data.getCounter}',
-//               style: Theme.of(context).textTheme.headline4,
+//               style: Theme.of(context).textTheme.headlineMedium,
 //             ),
 //           ],
 //         ),
