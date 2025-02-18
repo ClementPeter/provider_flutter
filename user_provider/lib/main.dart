@@ -36,7 +36,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  //
+  //Form Key helps us in Form validation
   final GlobalKey<FormState> _formKey = GlobalKey();
   //Calling this method is equivalent to calling:
   // context.
